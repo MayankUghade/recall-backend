@@ -36,6 +36,7 @@ export const register = async (
     });
 
     const token = generateToken(
+      user.username,
       user.id,
       user.email
     );
@@ -83,6 +84,7 @@ export const login = async(req:Request, res:Response)=>{
     }
 
     const token = generateToken(
+      user.username,
       user.id,
       user.email
     );

@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken'
 
-export function generateToken( userId :number, email:string){
+export function generateToken( username:string, userId :number, email:string){
 return jwt.sign(
     {
+        username,
         userId,
         email
     },
