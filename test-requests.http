@@ -1,0 +1,39 @@
+### Variables
+@baseUrl = http://localhost:8000
+@token = YOUR_JWT_TOKEN_HERE
+
+### 1. Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "sachin",
+  "email": "sachin@gmail.com",
+  "password": "securepassword123"
+}
+
+### 2. Login (This will return the token)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "sachin@gmail.com",
+  "password": "securepassword123"
+}
+
+### 3. Get all people (Protected)
+GET {{baseUrl}}/api/people
+Authorization: Bearer {{token}}
+
+### 4. Match a face embedding (Protected)
+POST {{baseUrl}}/api/people/match
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "embedding": [0.12, -0.45, 0.88, 0.01, -0.3]
+}
+
+### 5. Get a specific person by ID (Protected)
+GET {{baseUrl}}/api/people/PERSON_ID_HERE
+Authorization: Bearer {{token}}
