@@ -19,7 +19,17 @@ export const matchFace = async(req:AuthRequest, res:Response)=>{
     }
 
     const people = await prisma.person.findMany({
-      where: { userId }
+    where: { userId },
+    include: {
+        encounters: {
+        select: {
+            summary: true,
+            topics: true,
+            location: true,
+            date: true,
+        }
+        }
+    }
     });
     
     let best: (typeof people)[0] | null = null
