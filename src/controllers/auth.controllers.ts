@@ -54,6 +54,7 @@ export const register = async (
     console.error("Register ERROR:");
     console.error(error);
     res.status(500).json({
+      error,
       message: "Something went wrong",
     });
   }
@@ -104,6 +105,7 @@ export const login = async(req:Request, res:Response)=>{
       console.error("Login ERROR:");
       console.error(error);
       res.status(500).json({
+       error, 
       message: "Something went wrong",
     });
     }
