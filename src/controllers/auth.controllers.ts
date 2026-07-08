@@ -51,6 +51,8 @@ export const register = async (
       }
     });
   } catch (error) {
+    console.error("Register ERROR:");
+    console.error(error);
     res.status(500).json({
       message: "Something went wrong",
     });
@@ -99,6 +101,8 @@ export const login = async(req:Request, res:Response)=>{
       }
     });
     } catch (error) {
+      console.error("Login ERROR:");
+      console.error(error);
       res.status(500).json({
       message: "Something went wrong",
     });
