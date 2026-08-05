@@ -96,3 +96,35 @@ export const getAllPeople = async(req:AuthRequest, res:Response)=>{
 
     }
 }
+
+// DELETE /api/people/:id
+export const deletePerson = async (req: AuthRequest, res: Response) => {
+    try {
+        const userId = req.user?.userId;
+        const { id } = req.params;
+
+        if (typeof id !== "string") {
+            return res.status(400).json({ error: "Invalid ID parameter" });
+        }
+
+        // Verify ownership before deleting
+        const person = await prisma.person.findUnique({ where: { id } });
+        if (!person) {
+            return res.status(404).json({ error: "Person not found" });
+        }
+        if (person.userId !== userId) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+
+        // Delete all encounters first (no cascade set in schema)
+        await prisma.encounter.deleteMany({ where: { personId: id } });
+
+        // Now delete the person
+        await prisma.person.delete({ where: { id } });
+
+        return res.json({ message: "Person and all their encounters deleted successfully" });
+    } catch (error) {
+        console.error("[deletePerson]", error);
+        return res.status(500).json({ error: "delete failed" });
+    }
+}

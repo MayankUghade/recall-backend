@@ -71,22 +71,22 @@ export const createEncounter = async (req:AuthRequest, res:Response)=>{
           role: "user",
           content: `Extract information from this conversation transcript.
  
-Return exactly this shape:
-{
-  "name": string or null,
-  "occupation": string or null,
-  "topics": string[],
-  "summary": string
-}
- 
-Rules:
-- "name": the other person's name if mentioned, else null
-- "occupation": what the other person does if mentioned, else null  
-- "topics": array of short strings — things discussed (e.g. ["startup ideas", "moved to Bangalore", "looking for a job"])
-- "summary": 1-2 sentences you'd want to remember about this person and conversation
- 
-Transcript:
-${transcript}`,
+          Return exactly this shape:
+          {
+            "name": string or null,
+            "occupation": string or null,
+            "topics": string[],
+            "summary": string
+          }
+          
+          Rules:
+          - "name": the other person's name if mentioned, else null
+          - "occupation": what the other person does if mentioned, else null  
+          - "topics": array of short strings — things discussed (e.g. ["startup ideas", "moved to Bangalore", "looking for a job"])
+          - "summary": 1-2 sentences you'd want to remember about this person and conversation
+          
+          Transcript:
+          ${transcript}`,
         },
       ],
     });
@@ -196,3 +196,4 @@ ${transcript}`,
 //     return res.status(500).json({ error: "fetch failed" });
 //   }
 // };
+
