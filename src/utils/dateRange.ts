@@ -4,33 +4,31 @@ export function parseDateRange(message: string): { start: Date; end: Date; label
   const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const lower = message.toLowerCase();
 
-  if (/\byesterday\b/.test(lower)) {
+  if (/\byesterdays?\b/.test(lower)) {
     const start = new Date(startOfToday);
     start.setDate(start.getDate() - 1);
-    const end = new Date(startOfToday); // exclusive upper bound = start of today
+    const end = new Date(startOfToday);
     return { start, end, label: "yesterday" };
   }
 
-  if (/\bthis week\b/.test(lower) || /\bweek\b/.test(lower)) {
+  if (/\bthis week\b/.test(lower) || /\bweeks?\b/.test(lower)) {
     const start = new Date(startOfToday);
-    start.setDate(start.getDate() - start.getDay()); // back to Sunday
+    start.setDate(start.getDate() - start.getDay());
     return { start, end: new Date(now), label: "this week" };
   }
 
-  if (/\btoday\b/.test(lower)) {
+  if (/\btodays?\b/.test(lower)) {
     return { start: startOfToday, end: new Date(now), label: "today" };
   }
 
-  // catches "so far", "all", "ever", "all time", "everyone I've met", etc.
   if (
     /\ball\b/.test(lower) ||
     /\bso far\b/.test(lower) ||
     /\bever\b/.test(lower) ||
     /\beverything\b/.test(lower)
   ) {
-    return { start: new Date(0), end: new Date(now), label: "all time" }; // epoch to now
+    return { start: new Date(0), end: new Date(now), label: "all time" };
   }
 
-  // fallback default — no time keyword detected at all
   return { start: startOfToday, end: new Date(now), label: "today" };
 }
