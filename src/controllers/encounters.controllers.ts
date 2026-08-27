@@ -60,7 +60,7 @@ export const createEncounter = async (req:AuthRequest, res:Response)=>{
     console.log("[encounters] Extracting facts...");
 
     const extraction = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-20b",
       temperature: 0.1, // low temp = more predictable JSON
       messages: [
         {

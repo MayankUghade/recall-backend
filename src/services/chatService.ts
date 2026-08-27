@@ -17,18 +17,23 @@ export async function answerChatQuery(userId: number, message: string) {
   });
 
   if (encounters.length === 0) {
-    return { reply: `You don't have any recorded encounters ${label}.`, encounters: [] };
+    return {
+      reply: `You don't have any recorded encounters ${label}.`,
+      encounters: [],
+    };
   }
 
   const context = encounters
     .map((e) => {
-      const topics = Array.isArray(e.topics) ? (e.topics as string[]).join(", ") : "";
+      const topics = Array.isArray(e.topics)
+        ? (e.topics as string[]).join(", ")
+        : "";
       return `- ${e.person.name ?? "Unknown"} (${e.person.occupation ?? "unknown occupation"}), ${e.date.toISOString()}: ${e.summary ?? "no summary"}. Topics: ${topics}`;
     })
     .join("\n");
 
   const completion = await groq.chat.completions.create({
-    model: "llama-3.3-70b-versatile",
+    model: "openai/gpt-oss-20b",
     messages: [
       {
         role: "system",
